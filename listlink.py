@@ -89,7 +89,7 @@ class SingleLinkList(object):
                 break
             else:
                 pre=cur
-                cur=cur.next#检测不等于就跳过
+                cur=cur.next#下一个节点，根据逻辑惯例，从头结点到尾节点一次带入执行
     
     def search(self,item):
         #查找某个节点
