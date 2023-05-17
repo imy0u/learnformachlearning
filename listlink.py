@@ -79,6 +79,7 @@ class SingleLinkList(object):
             if cur.elem==item:
                 #考虑这个节点是不是头节点
                 #如果不考虑会怎么样？
+                #没有考虑节点是尾节点的情况
                 if cur==self._head:
                     #是头节点，就把下一个节点赋值给头节点
                     self._head=cur.next#这个时候原本的头节点还没有被释放
