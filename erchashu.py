@@ -87,12 +87,20 @@ class Tress(object):
         #后续遍历，有点麻烦
         if root==None:
             print('树为空，无法进行遍历！')
-        myStack=[]
+        myStack1=[]
+        myStack2=[]
         node=root
-        while node or myStack:
+        myStack1.append(node)
+        while node or myStack1:
             while node:
-                myStack.append(node)
-                node=node.lchild
+                node=myStack1.pop
+                myStack2.append(node)
+                if node.lchild:
+                    myStack1.append(node.lchild)
+                if node.rchild:
+                    myStack1.append(node.rchild)
+        while myStack2:
+            print(myStack2.pop.elem)
                 
     
     def level_queue(self,root):
@@ -103,7 +111,7 @@ class Tress(object):
         node=root
         myQueue.append(node)
         while node or myQueue:
-            #myQueue.append(node)
+            #myQueue.append(node)s
             node=myQueue.pop(0)
             print(node.elem)
             if node.lchild !=None:
