@@ -8,4 +8,4 @@ def quickSort(nums):
     pivot=nums[0]#第一轮的基准值
     left=[nums[i] for i in range(1,len(nums)) if nums[i]<pivot]
     right=[nums[i] for i in range(1,len(nums)) if nums[i]>=pivot]
-    return quickSort(left)+[pivot]+quickSort(right)
+    return quickSort(left)+[pivot]+quickSort(right)#递归策略
