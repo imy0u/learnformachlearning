@@ -31,10 +31,15 @@ def synthetic_data(w,b,num_examples):
     X=torch.normal(0,1,(num_examples,len(w)))#均值为0，方差为1的随机数
     y=torch.matmul(X,w)+b#Xw+b
     y+=torch.normal(0,0.01,y.shape)#均值为0，方差为0.01，形状和y一样
+    '''
+    均值和方差
+    均值表示，该样本的平均值
+    方差表示，该样本离散程的度量，表示样本和平均值差额的平均值
+    '''
     return X,y.reshape((-1,1))#reshape(-1,1)转化为1行
 true_w=torch.tensor([2,-3.4])
 true_b=4.2
-features,labels=synthetic_data(true_w,true_b,10000000)
+features,labels=synthetic_data(true_w,true_b,1000)
 
 def use_svg_display():
     # display.set_matplotlib_formats('svg')
@@ -53,6 +58,7 @@ def showshowkan():#展示
 def data_iter(batch_size,features,labels):#每次输出batch_size个
     num_examples=len(features)
     indices=list(range(num_examples))#生成样本长度个数列
+    # print(indices)
     random.shuffle(indices)#将样本顺序随机打乱
     for i in range(0,num_examples,batch_size):#每次跳batch_size个大小
         batch_indices=torch.tensor(indices[i:min(i+batch_size,num_examples)])
@@ -67,7 +73,7 @@ def read_shuju():
         break
 batch_size=10
 '''初始化模型参数'''
-w = torch.normal(0, 0.01, size=(2,1), requires_grad=True)
+w = torch.normal(0, 0.01, size=(2,1), requires_grad=True)#长度为2的向量
 b = torch.zeros(1, requires_grad=True)
 '''定义模型'''
 def linreg(X, w, b):  #@save
@@ -78,22 +84,28 @@ def squared_loss(y_hat,y):
     '''
     均方误差
     没有算均值
+    这样返回的是和
     '''
     return(y_hat-y.reshape(y_hat.shape))**2/2
+'''
+reshape函数
+在不改变矩阵内数据的前提下，改变矩阵的形状
+shape读取一维数组的个数，读取二维数组的行数（shape（0））shape（1）读取列数 
+'''
 '''定义优化算法'''
 def sgd(params, lr, batch_size):  #@save
     """小批量随机梯度下降"""
     with torch.no_grad():#这里表示不自动求导，自动设置为false
         for param in params:
-            param -= lr * param.grad / batch_size#步伐*
+            param -= lr * param.grad / batch_size#步伐 另外 这里除以一个样本量，是因为在计算均方误差的时候，没有算均值，所以这里补上 了
             param.grad.zero_()
             '''
             斜率和梯度的区别
             梯度是一个方向向量，表示函数在该点沿着这个方向变化最快
             '''
 '''训练'''
-lr = 0.03
-num_epochs = 3
+lr = 0.03#学习率
+num_epochs = 10#把数据扫三遍
 net = linreg
 loss = squared_loss
 
