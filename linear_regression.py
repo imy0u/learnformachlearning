@@ -23,12 +23,13 @@ class linearmodel(torch.nn.Module):
             return F.linear(input, self.weight, self.bias)
             '''
         return y_pred
-    
+
+
 model=linearmodel()
 
 criterion=torch.nn.MSELoss(size_average=False)
 # 这里设置求损失不求均值啥意思
-optimizer=torch.optim.SGD(model.parameters(),lr=0.01)
+optimizer=torch.optim.Rprop(model.parameters(),lr=0.01)
 # 设置优化器 设置学习速率
 for epoch in range(100):
     y_pred=model(x_data)
@@ -36,6 +37,7 @@ for epoch in range(100):
     print(epoch,loss.item())
     epoch_list.append(epoch)
     item_list.append(loss.item())
+
     optimizer.zero_grad()
     # 设置梯度清零
     loss.backward()
