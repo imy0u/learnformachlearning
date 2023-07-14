@@ -28,7 +28,7 @@ class linearmodel(torch.nn.Module):
 model=linearmodel()
 
 criterion=torch.nn.MSELoss(size_average=False)
-# 这里设置求损失不求均值啥意思
+# 这里设置不给每个批量求均值
 optimizer=torch.optim.Rprop(model.parameters(),lr=0.01)
 # 设置优化器 设置学习速率
 for epoch in range(100):
