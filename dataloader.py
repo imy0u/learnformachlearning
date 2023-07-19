@@ -18,7 +18,7 @@ class DiabetesDataset(Dataset):
 dataset=DiabetesDataset('..\data\diabetes.csv.gz')
 train_loader=DataLoader(dataset=dataset,
                         batch_size=32,
-                        shuffle=True,
+                        shuffle=True,#将数据集进行打乱
                         num_workers=2)
 class Model(torch.nn.Module):
     def __init__(self, *args, **kwargs) -> None:
